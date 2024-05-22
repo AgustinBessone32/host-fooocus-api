@@ -40,8 +40,7 @@ kill_run_ngrok() {
         kill $NGROK_PID
         sleep 1  # Dar un segundo para que el proceso termine
     fi
-    ngrok authtoken $NGROK_AUTH_TOKEN
-    ngrok http $FOOOCUS_PORT
+    python ngrok.py
 }
 
 # Function to display disk usage
