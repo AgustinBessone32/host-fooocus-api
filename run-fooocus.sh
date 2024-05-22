@@ -42,9 +42,8 @@ kill_run_ngrok() {
         sleep 1  # Dar un segundo para que el proceso termine
     fi
     ngrok http $FOOOCUS_PORT > /dev/null &
-    WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\Khttps://[^"]+')
+    export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
     echo "ngrok URL: $WEBHOOK_URL"
-    curl -s http://localhost:4040/api/tunnels
 }
 
 # Function to display disk usage
