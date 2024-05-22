@@ -11,6 +11,7 @@ show_menu() {
     echo "4. Install lora"
     echo "5. Install model"
     echo "6. Run Fooocus"
+    echo "7. Kill and run fooocus async"
     echo "0. Exit"
     echo "---------------------------"
     echo -n "Please enter your choice (0-6): "
@@ -50,9 +51,9 @@ install_lora() {
     echo "Lora file url:"
     read fileurl
     wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/$filename $fileurl
-
-    #wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/add-detail-xl.safetensors https://civitai.com/api/download/models/135867
     echo "$filename installed succesfully"
+    echo "--------------------------------------------------------------------------------------------------------------"
+    echo "LORAS AVAILABLES"
     ls /workspace/Fooocus-API/repositories/Fooocus/models/loras
 }
 
@@ -63,6 +64,8 @@ install_model() {
     read fileurl
     wget -O /workspace/Fooocus-API/repositories/Fooocus/models/checkpoints/$filename $fileurl
     echo "$filename installed succesfully"
+    echo "--------------------------------------------------------------------------------------------------------------"
+    echo "MODELS AVAILABLES"
     ls /workspace/Fooocus-API/repositories/Fooocus/models/checkpoints
 }
 
@@ -106,7 +109,7 @@ while true; do
         6)
             run_fooocus_api
             ;;
-        6)
+        7)
             kill_run_fooocus_api_async
             ;;             
         0)
