@@ -35,14 +35,33 @@ clone_install_fooocus_api() {
 # Function to display the current directory
 kill_run_ngrok() {
     pip install pyngrok
-    #NGROK_PID=$(pgrep ngrok)
-    #if [ -n "$NGROK_PID" ]; then
-    #    echo "Terminando el proceso existente de ngrok con PID: $NGROK_PID"
-    #    kill $NGROK_PID
-    #    sleep 1  # Dar un segundo para que el proceso termine
-    #fi
+    NGROK_PIDS=$(pgrep ngrok)
+
+    # Verificar si se encontraron procesos ngrok
+    if [ -n "$NGROK_PIDS" ]; then
+        echo "Terminando los procesos existentes de ngrok con PIDs: $NGROK_PIDS"
+        
+        # Iterar sobre cada PID y matar el proceso
+        for PID in $NGROK_PIDS; do
+            kill $PID
+        done
+        
+        # Dar un segundo para que los procesos terminen
+        sleep 1
+        
+        # Verificar si todos los procesos fueron terminados
+        REMAINING_PIDS=$(pgrep ngrok)
+        if [ -z "$REMAINING_PIDS" ]; then
+            echo "Todos los procesos ngrok fueron terminados correctamente."
+        else
+            echo "No se pudieron terminar algunos procesos ngrok: $REMAINING_PIDS"
+        fi
+    else
+        echo "No se encontraron procesos ngrok ejecutándose."
+    fi
     ngrok http $FOOOCUS_PORT > /dev/null &
     #export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
+    sleep 5
     echo $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
 }
 
