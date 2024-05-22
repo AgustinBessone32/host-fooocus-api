@@ -35,15 +35,15 @@ clone_install_fooocus_api() {
 # Function to display the current directory
 kill_run_ngrok() {
     pip install pyngrok
-    NGROK_PID=$(pgrep ngrok)
-    if [ -n "$NGROK_PID" ]; then
-        echo "Terminando el proceso existente de ngrok con PID: $NGROK_PID"
-        kill $NGROK_PID
-        sleep 1  # Dar un segundo para que el proceso termine
-    fi
+    #NGROK_PID=$(pgrep ngrok)
+    #if [ -n "$NGROK_PID" ]; then
+    #    echo "Terminando el proceso existente de ngrok con PID: $NGROK_PID"
+    #    kill $NGROK_PID
+    #    sleep 1  # Dar un segundo para que el proceso termine
+    #fi
     ngrok http $FOOOCUS_PORT > /dev/null &
-    export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
-    echo $WEBHOOK_URL
+    #export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
+    echo $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
 }
 
 # Function to display disk usage
