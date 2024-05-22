@@ -36,7 +36,7 @@ clone_install_fooocus_api() {
 kill_run_ngrok() {
     pip install pyngrok
     NGROK_PIDS=$(pgrep ngrok)
-
+    
     # Verificar si se encontraron procesos ngrok
     if [ -n "$NGROK_PIDS" ]; then
         echo "Terminando los procesos existentes de ngrok con PIDs: $NGROK_PIDS"
@@ -59,6 +59,7 @@ kill_run_ngrok() {
     else
         echo "No se encontraron procesos ngrok ejecutándose."
     fi
+    ngrok config add-authtoken $NGROK_AUTH_TOKEN
     ngrok http $FOOOCUS_PORT > /dev/null &
     sleep 5
     export $WEBHOOK_URL = $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
