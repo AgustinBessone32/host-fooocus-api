@@ -60,8 +60,8 @@ kill_run_ngrok() {
         echo "No se encontraron procesos ngrok ejecutándose."
     fi
     ngrok http $FOOOCUS_PORT > /dev/null &
-    #export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
     sleep 5
+    export $WEBHOOK_URL = $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
     echo $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
 }
 
