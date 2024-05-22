@@ -43,7 +43,7 @@ kill_run_ngrok() {
     fi
     ngrok http $FOOOCUS_PORT > /dev/null &
     export WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
-    echo "ngrok URL: $WEBHOOK_URL"
+    echo $WEBHOOK_URL
 }
 
 # Function to display disk usage
