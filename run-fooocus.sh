@@ -71,7 +71,7 @@ install_model() {
 
 run_fooocus_api_sync() {
     echo "Running fooocus api SYNC MODE:"
-    python main.py
+    python /workspace/Fooocus-API/main.py
 }
 
 kill_run_fooocus_api_async() {
@@ -83,7 +83,7 @@ kill_run_fooocus_api_async() {
     else
         echo "No se encontró ningún proceso escuchando en el puerto $PORT."
     fi
-    nohup python main.py > output.log 2>&1 &
+    nohup python /workspace/Fooocus-API/main.py > output.log 2>&1 &
 }
 
 # Main loop to display the menu and get user input
@@ -107,7 +107,7 @@ while true; do
             install_model
             ;;    
         6)
-            run_fooocus_api
+            run_fooocus_api_sync
             ;;
         7)
             kill_run_fooocus_api_async
