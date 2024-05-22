@@ -41,7 +41,10 @@ kill_run_ngrok() {
         kill $NGROK_PID
         sleep 1  # Dar un segundo para que el proceso termine
     fi
-    python ngrok.py
+    ngrok http $FOOOCUS_PORT > /dev/null &
+    WEBHOOK_URL=$(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\Khttps://[^"]+')
+    echo "ngrok URL: $WEBHOOK_URL"
+    curl -s http://localhost:4040/api/tunnels
 }
 
 # Function to display disk usage
@@ -72,7 +75,7 @@ install_model() {
 run_fooocus_api_sync() {
     echo "Running fooocus api SYNC MODE:"
     cd /workspace/Fooocus-API/
-    python main.py
+    python main.py --port $FOOOCUS_PORT
 }
 
 kill_run_fooocus_api_async() {
@@ -85,7 +88,7 @@ kill_run_fooocus_api_async() {
         echo "No se encontró ningún proceso escuchando en el puerto $PORT."
     fi
     cd /workspace/Fooocus-API/
-    nohup python main.py > output.log 2>&1 &
+    nohup python main.py --port $FOOOCUS_PORT > output.log 2>&1 &
 }
 
 # Main loop to display the menu and get user input
