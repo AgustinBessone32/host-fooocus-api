@@ -53,6 +53,7 @@ install_lora() {
 
     #wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/add-detail-xl.safetensors https://civitai.com/api/download/models/135867
     echo "$filename installed succesfully"
+    ls /workspace/Fooocus-API/repositories/Fooocus/models/loras
 }
 
 install_model() {
@@ -60,8 +61,9 @@ install_model() {
     read filename
     echo "Model file url:"
     read fileurl
-    wget -O "/workspace/Fooocus-API/repositories/Fooocus/models/checkpoints/$filename" "$URL"
+    wget -O /workspace/Fooocus-API/repositories/Fooocus/models/checkpoints/$filename $fileurl
     echo "$filename installed succesfully"
+    ls /workspace/Fooocus-API/repositories/Fooocus/models/checkpoints
 }
 
 run_fooocus_api_sync() {
