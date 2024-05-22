@@ -49,7 +49,7 @@ install_lora() {
     read filename
     echo "Lora file url:"
     read fileurl
-    wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/$filename $URL
+    wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/$filename $fileurl
 
     #wget -O /workspace/Fooocus-API/repositories/Fooocus/models/loras/add-detail-xl.safetensors https://civitai.com/api/download/models/135867
     echo "$filename installed succesfully"
