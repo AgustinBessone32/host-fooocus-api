@@ -45,8 +45,8 @@ config_env_var() {
     echo "FOOOCUS_API:"
     read FOOOCUS_PORT_INPUT
 
-    sh -c "echo \"NGROK_AUTH_TOKEN=$NGROK_AUTH_TOKEN_INPUT\" >> /etc/environment"
-    sh -c "echo \"FOOOCUS_API=$FOOOCUS_PORT_INPUT\" >> /etc/environment"
+    sudo sh -c 'echo "$NGROK_AUTH_TOKEN=$NGROK_AUTH_TOKEN_INPUT" >> /etc/environment'
+    sudo sh -c 'echo "$FOOOCUS_API=$FOOOCUS_PORT_INPUT" >> /etc/environment'
 }
 
 # Function to display the current directory
