@@ -61,9 +61,8 @@ kill_run_ngrok() {
     fi
     ngrok config add-authtoken $NGROK_AUTH_TOKEN
     ngrok http $FOOOCUS_PORT > /dev/null &
-    sleep 15
-    WEBHOOK_URL = $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
-    echo $(WEBHOOK_URL) # con esto podes ver el link publico de ngrok
+    sleep 20
+    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
 }
 
 # Function to display disk usage
