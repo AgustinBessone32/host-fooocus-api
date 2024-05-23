@@ -13,6 +13,7 @@ show_menu() {
     echo "6. Run Fooocus"
     echo "7. Kill and run fooocus async"
     echo "8. Get ngrok public endpoint"
+    echo "9. Config env var"
     echo "0. Exit"
     echo "---------------------------"
     echo -n "Please enter your choice (0-6): "
@@ -157,7 +158,10 @@ while true; do
             ;;       
         8)
             get_ngrok_public
-            ;;                 
+            ;;            
+        9)
+            config_env_var
+            ;;         
         0)
             echo "Exiting the program. Goodbye!"
             exit 0
