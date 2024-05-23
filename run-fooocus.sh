@@ -109,6 +109,11 @@ kill_run_fooocus_api_async() {
     nohup python main.py --port $FOOOCUS_PORT > output.log 2>&1 &
 }
 
+get_ngrok_public() {
+    echo "NGROK PUBLIC PATH"
+    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
+}
+
 # Main loop to display the menu and get user input
 while true; do
     show_menu
@@ -134,7 +139,10 @@ while true; do
             ;;
         7)
             kill_run_fooocus_api_async
-            ;;             
+            ;;       
+        8)
+            get_ngrok_public
+            ;;                 
         0)
             echo "Exiting the program. Goodbye!"
             exit 0
