@@ -33,6 +33,20 @@ clone_install_fooocus_api() {
     pip install -r requirements.txt
 }
 
+config_env_var() {
+    apt-get update
+    apt-get upgrade
+    apt-get install nano
+
+    echo "NGROK AUTH TOKEN:"
+    read NGROK_AUTH_TOKEN_INPUT
+
+    echo "FOOOCUS_API:"
+    read FOOOCUS_PORT_INPUT
+
+    sh -c 'echo "NGROK_AUTH_TOKEN=$NGROK_AUTH_TOKEN_INPUT\nFOOOCUS_PORT=$FOOOCUS_PORT_INPUT" >> /etc/environment'
+}
+
 # Function to display the current directory
 kill_run_ngrok() {
     pip install pyngrok

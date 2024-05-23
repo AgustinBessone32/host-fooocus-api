@@ -2,10 +2,9 @@
 ```bash
 apt-get update
 apt-get upgrade
+apt-get install nano
 
-nano  ~/.bashrc
-// agregar las variables de entorno
-source ~/.bashrc
+sh -c 'echo "VAR1=value1\nVAR2=value2\nVAR3=value3" >> /etc/environment'
 ```
 
 ENV VAR 
