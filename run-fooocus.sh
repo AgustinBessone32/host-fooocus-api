@@ -12,6 +12,7 @@ show_menu() {
     echo "5. Install model"
     echo "6. Run Fooocus"
     echo "7. Kill and run fooocus async"
+    echo "8. Get ngrok public endpoint"
     echo "0. Exit"
     echo "---------------------------"
     echo -n "Please enter your choice (0-6): "
