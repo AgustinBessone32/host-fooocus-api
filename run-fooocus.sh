@@ -5,23 +5,32 @@ show_menu() {
     echo "---------------------------"
     echo "       Main Menu"
     echo "---------------------------"
-    echo "1. Run ALL steps"
-    echo "2. Clone fooocus and install requirements"
-    echo "3. Kill and Run ngrok"
+    echo "1. Initialize instance (without installing) "
+    echo "2. Initialize first time instance (install fooocus and requirements)"
+    echo "3. Clone install fooocus"
     echo "4. Install lora"
     echo "5. Install model"
     echo "6. Run Fooocus"
     echo "7. Kill and run fooocus async"
-    echo "8. Get ngrok public endpoint"
-    echo "9. Config env var"
     echo "0. Exit"
     echo "---------------------------"
     echo -n "Please enter your choice (0-6): "
 }
 
 # Function to display the date and time
-run_all_steps() {
-    echo "The current date and time is: $(date)"
+initialize_instance() {
+    apt-get update
+    apt-get install nano
+    apt-get install lsof
+    kill_run_fooocus_api_async()
+}
+
+initialize_instance_first_time() {
+    apt-get update
+    apt-get install nano
+    apt-get install lsof
+    clone_install_fooocus_api()
+    kill_run_fooocus_api_async()
 }
 
 # Function to list files in the current directory
@@ -32,54 +41,6 @@ clone_install_fooocus_api() {
     cd Fooocus-API
     echo echo "Installing requirements"
     pip install -r requirements.txt
-}
-
-config_env_var() {
-    apt-get update
-    apt-get upgrade
-    apt-get install nano
-
-    echo "NGROK AUTH TOKEN:"
-    read NGROK_AUTH_TOKEN_INPUT
-
-    echo "FOOOCUS_API:"
-    read FOOOCUS_PORT_INPUT
-
-    export NGROK_AUTH_TOKEN=$NGROK_AUTH_TOKEN_INPUT
-    export FOOOCUS_PORT=$FOOOCUS_PORT_INPUT
-}
-
-# Function to display the current directory
-kill_run_ngrok() {
-    pip install pyngrok
-    NGROK_PIDS=$(pgrep ngrok)
-    
-    # Verificar si se encontraron procesos ngrok
-    if [ -n "$NGROK_PIDS" ]; then
-        echo "Terminando los procesos existentes de ngrok con PIDs: $NGROK_PIDS"
-        
-        # Iterar sobre cada PID y matar el proceso
-        for PID in $NGROK_PIDS; do
-            kill $PID
-        done
-        
-        # Dar un segundo para que los procesos terminen
-        sleep 1
-        
-        # Verificar si todos los procesos fueron terminados
-        REMAINING_PIDS=$(pgrep ngrok)
-        if [ -z "$REMAINING_PIDS" ]; then
-            echo "Todos los procesos ngrok fueron terminados correctamente."
-        else
-            echo "No se pudieron terminar algunos procesos ngrok: $REMAINING_PIDS"
-        fi
-    else
-        echo "No se encontraron procesos ngrok ejecutándose."
-    fi
-    ngrok config add-authtoken $NGROK_AUTH_TOKEN
-    ngrok http $FOOOCUS_PORT > /dev/null &
-    sleep 20
-    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
 }
 
 # Function to display disk usage
@@ -126,24 +87,19 @@ kill_run_fooocus_api_async() {
     nohup python main.py --port $FOOOCUS_PORT --host 0.0.0.0 > output.log &
 }
 
-get_ngrok_public() {
-    echo "NGROK PUBLIC PATH"
-    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
-}
-
 # Main loop to display the menu and get user input
 while true; do
     show_menu
     read choice
     case $choice in
         1)
-            run_all_steps
+            initialize_instance
             ;;
         2)
-            clone_install_fooocus_api
+            initialize_instance_first_time
             ;;
         3)
-            kill_run_ngrok
+            clone_install_fooocus_api
             ;;
         4)
             install_lora
@@ -156,13 +112,7 @@ while true; do
             ;;
         7)
             kill_run_fooocus_api_async
-            ;;       
-        8)
-            get_ngrok_public
-            ;;            
-        9)
-            config_env_var
-            ;;         
+            ;;   
         0)
             echo "Exiting the program. Goodbye!"
             exit 0
