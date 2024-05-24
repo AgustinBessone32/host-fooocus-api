@@ -12,6 +12,8 @@ show_menu() {
     echo "5. Install model"
     echo "6. Run Fooocus"
     echo "7. Kill and run fooocus async"
+    echo "8. Get ngrok public endpoint"
+    echo "9. Config env var"
     echo "0. Exit"
     echo "---------------------------"
     echo -n "Please enter your choice (0-6): "
@@ -30,6 +32,21 @@ clone_install_fooocus_api() {
     cd Fooocus-API
     echo echo "Installing requirements"
     pip install -r requirements.txt
+}
+
+config_env_var() {
+    apt-get update
+    apt-get upgrade
+    apt-get install nano
+
+    echo "NGROK AUTH TOKEN:"
+    read NGROK_AUTH_TOKEN_INPUT
+
+    echo "FOOOCUS_API:"
+    read FOOOCUS_PORT_INPUT
+
+    export NGROK_AUTH_TOKEN=$NGROK_AUTH_TOKEN_INPUT
+    export FOOOCUS_PORT=$FOOOCUS_PORT_INPUT
 }
 
 # Function to display the current directory
@@ -61,9 +78,8 @@ kill_run_ngrok() {
     fi
     ngrok config add-authtoken $NGROK_AUTH_TOKEN
     ngrok http $FOOOCUS_PORT > /dev/null &
-    sleep 5
-    #export $WEBHOOK_URL = $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+')
-    echo $(curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+') # con esto podes ver el link publico de ngrok
+    sleep 20
+    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
 }
 
 # Function to display disk usage
@@ -110,6 +126,11 @@ kill_run_fooocus_api_async() {
     nohup python main.py --port $FOOOCUS_PORT --host 0.0.0.0 > output.log &
 }
 
+get_ngrok_public() {
+    echo "NGROK PUBLIC PATH"
+    curl -s http://localhost:4040/api/tunnels | grep -oP '"public_url":"\K[^"]+'
+}
+
 # Main loop to display the menu and get user input
 while true; do
     show_menu
@@ -135,7 +156,13 @@ while true; do
             ;;
         7)
             kill_run_fooocus_api_async
-            ;;             
+            ;;       
+        8)
+            get_ngrok_public
+            ;;            
+        9)
+            config_env_var
+            ;;         
         0)
             echo "Exiting the program. Goodbye!"
             exit 0
