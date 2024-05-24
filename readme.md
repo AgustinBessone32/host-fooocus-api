@@ -7,7 +7,10 @@ source ~/.profile
 
 ENV VAR 
 
-
+si queres ver los logs en tiempo real es esto tail
+```bash
+tail -f /workspace/Fooocus-API/output.log
+```
 
 ```bash
 NGROK_AUTH_TOKEN="TU_NGROK_AUTHTOKEN"
