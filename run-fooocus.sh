@@ -22,15 +22,15 @@ initialize_instance() {
     apt-get update
     apt-get install nano
     apt-get install lsof
-    kill_run_fooocus_api_async()
+    kill_run_fooocus_api_async
 }
 
 initialize_instance_first_time() {
     apt-get update
     apt-get install nano
     apt-get install lsof
-    clone_install_fooocus_api()
-    kill_run_fooocus_api_async()
+    clone_install_fooocus_api
+    kill_run_fooocus_api_async
 }
 
 # Function to list files in the current directory
