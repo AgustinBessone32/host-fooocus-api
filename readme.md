@@ -1,9 +1,6 @@
 apt-get update
 apt-get install nano
-apt-get install lsof
-
-nano ~/.profile
-source ~/.profile
+```
 
 ENV VAR 
 
