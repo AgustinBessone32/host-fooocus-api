@@ -8,3 +8,4 @@ wget -O /workspace/stable-diffusion-webui/models/Lora/Breast Slider - Pony_alpha
 wget -O /workspace/stable-diffusion-webui/models/Lora/skin_tone_slider_v1.safetensors https://civitai.com/api/download/models/121575?token=95fc7ee7e2a6ecc0c64f095ce9b18109
 wget -O /workspace/stable-diffusion-webui/models/Lora/Cleavage Slider_alpha1.0_rank4_noxattn_last.safetensors.safetensors https://civitai.com/api/download/models/541905?token=95fc7ee7e2a6ecc0c64f095ce9b18109
 wget -O /workspace/stable-diffusion-webui/models/Lora/Body Type_alpha1.0_rank4_noxattn_last.safetensors https://civitai.com/api/download/models/520909?token=95fc7ee7e2a6ecc0c64f095ce9b18109
+wget -O /workspace/stable-diffusion-webui/models/Lora/add_detail.safetensors https://civitai.com/api/download/models/62833?token=95fc7ee7e2a6ecc0c64f095ce9b18109
